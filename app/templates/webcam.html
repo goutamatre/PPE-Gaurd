@@ -1,0 +1,321 @@
+<!-- webcam.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Webcam Detection - PPE Detection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    /* Enhanced back to home link */
+    .back-link {
+      font-size: 20px !important;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateX(-5px);
+    }
+
+    /* Single centered view for webcam detection */
+    .single-view-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .single-view-container h4 {
+      font-size: 28px;
+      color: #1e293b;
+      margin-bottom: 25px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .video-wrapper-large {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #000;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #detection-canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    #webcam {
+      display: none !important;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .video-wrapper-large {
+        max-width: 95%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .back-link {
+        font-size: 18px !important;
+        padding: 10px 16px;
+      }
+
+      .single-view-container h4 {
+        font-size: 22px;
+      }
+
+      .video-wrapper-large {
+        max-width: 100%;
+        border-radius: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .back-link {
+        font-size: 16px !important;
+        padding: 8px 12px;
+      }
+
+      .single-view-container h4 {
+        font-size: 20px;
+      }
+
+      .video-wrapper-large {
+        border-radius: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container webcam-container">
+    <a href="/" class="back-link">
+      ← Back to Home
+    </a>
+
+    <div class="header">
+      <h1>📹 Live Webcam Detection</h1>
+      <p>Real-time PPE detection with live annotations</p>
+    </div>
+
+    <div class="main-card">
+      <div class="single-view-container">
+        <h4>Detection Results</h4>
+        <div class="video-wrapper-large">
+          <video id="webcam" autoplay playsinline style="display: none;"></video>
+          <canvas id="detection-canvas"></canvas>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="start-btn" class="btn btn-start">▶️ Start Detection</button>
+        <button id="stop-btn" class="btn btn-stop" style="display: none;">⏹️ Stop Detection</button>
+      </div>
+
+      <div class="stats">
+        <div id="status">Ready to start</div>
+        <div id="fps">FPS: 0</div>
+        <div id="detections">Detections: 0</div>
+      </div>
+    </div>
+
+    <footer>
+      © 2025 PPE Detection System | Powered by YOLOv8 + FastAPI
+    </footer>
+  </div>
+
+  <script>
+    const video = document.getElementById('webcam');
+    const detectionCanvas = document.getElementById('detection-canvas');
+    const detectionCtx = detectionCanvas.getContext('2d');
+    const startBtn = document.getElementById('start-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const status = document.getElementById('status');
+    const fpsDisplay = document.getElementById('fps');
+    const detectionsDisplay = document.getElementById('detections');
+    
+    let stream = null;
+    let isDetecting = false;
+    let frameCount = 0;
+    let lastTime = Date.now();
+    let processingFrame = false;
+
+    // Hidden canvas for capturing frames
+    const captureCanvas = document.createElement('canvas');
+    const captureCtx = captureCanvas.getContext('2d');
+
+    startBtn.addEventListener('click', async () => {
+      try {
+        status.textContent = '📡 Accessing camera...';
+        status.style.color = '#f59e0b';
+
+        stream = await navigator.mediaDevices.getUserMedia({ 
+          video: { 
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
+            facingMode: 'user'
+          } 
+        });
+        
+        video.srcObject = stream;
+        
+        video.onloadedmetadata = () => {
+          video.play();
+          
+          const width = video.videoWidth;
+          const height = video.videoHeight;
+          
+          // Set canvas dimensions to match video
+          detectionCanvas.width = width;
+          detectionCanvas.height = height;
+          captureCanvas.width = width;
+          captureCanvas.height = height;
+          
+          console.log('Camera started:', width, 'x', height);
+          
+          startBtn.style.display = 'none';
+          stopBtn.style.display = 'inline-block';
+          status.textContent = '✅ Detection active';
+          status.style.color = '#10b981';
+          
+          isDetecting = true;
+          frameCount = 0;
+          lastTime = Date.now();
+          
+          // Start detection loop
+          detectLoop();
+        };
+        
+      } catch (err) {
+        console.error('Camera error:', err);
+        status.textContent = '❌ Camera error: ' + err.message;
+        status.style.color = '#ef4444';
+      }
+    });
+
+    stopBtn.addEventListener('click', () => {
+      stopDetection();
+    });
+
+    function stopDetection() {
+      isDetecting = false;
+      processingFrame = false;
+      
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        video.srcObject = null;
+      }
+      
+      detectionCtx.clearRect(0, 0, detectionCanvas.width, detectionCanvas.height);
+      
+      startBtn.style.display = 'inline-block';
+      stopBtn.style.display = 'none';
+      status.textContent = '⏸️ Detection stopped';
+      status.style.color = '#64748b';
+      fpsDisplay.textContent = 'FPS: 0';
+      detectionsDisplay.textContent = 'Detections: 0';
+    }
+
+    async function detectLoop() {
+      if (!isDetecting) return;
+
+      // Process frame if not already processing
+      if (!processingFrame) {
+        processFrame();
+      }
+
+      // Continue loop
+      requestAnimationFrame(detectLoop);
+    }
+
+    async function processFrame() {
+      if (processingFrame || !isDetecting) return;
+      
+      processingFrame = true;
+
+      try {
+        // Capture current frame from video
+        captureCtx.drawImage(video, 0, 0, captureCanvas.width, captureCanvas.height);
+        
+        // Convert to blob
+        const blob = await new Promise(resolve => {
+          captureCanvas.toBlob(resolve, 'image/jpeg', 0.8);
+        });
+
+        if (!blob) {
+          processingFrame = false;
+          return;
+        }
+
+        // Send to backend
+        const formData = new FormData();
+        formData.append('file', blob, 'frame.jpg');
+        
+        const response = await fetch('/predict/', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error('Detection failed');
+        }
+
+        // Get annotated image
+        const imageBlob = await response.blob();
+        const img = new Image();
+        
+        img.onload = () => {
+          // Draw annotated frame on detection canvas
+          detectionCtx.drawImage(img, 0, 0, detectionCanvas.width, detectionCanvas.height);
+          
+          // Update FPS
+          frameCount++;
+          const now = Date.now();
+          if (now - lastTime >= 1000) {
+            fpsDisplay.textContent = `FPS: ${frameCount}`;
+            frameCount = 0;
+            lastTime = now;
+          }
+          
+          URL.revokeObjectURL(img.src);
+          processingFrame = false;
+        };
+        
+        img.onerror = () => {
+          console.error('Failed to load detection result');
+          processingFrame = false;
+        };
+        
+        img.src = URL.createObjectURL(imageBlob);
+
+      } catch (error) {
+        console.error('Detection error:', error);
+        processingFrame = false;
+        
+        // Wait before retrying
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    }
+
+    window.addEventListener('beforeunload', () => {
+      stopDetection();
+    });
+  </script>
+</body>
+</html>
