@@ -65,7 +65,6 @@ Screenshots:
 3. Webcam Detection – Live monitoring feed
    ![WhatsApp Image 2025-11-05 at 19 31 23_c9bcc6ba](https://github.com/user-attachments/assets/c1344b82-dce8-4f2e-a169-48a925532a20)
 
----
 
 ## 🚀 Quick Start
 
@@ -76,7 +75,7 @@ Screenshots:
 
 ### Installation
 
-```sh
+
 # 1. Clone repository
 git clone https://github.com/your-username/ppe-guard.git
 cd ppe-guard
