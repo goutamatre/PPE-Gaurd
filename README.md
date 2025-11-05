@@ -96,9 +96,7 @@ Download model:
 [https://drive.google.com/uc?export=download&id=14jNk69dfp8qO7xJXiaFggttIzH_b6z1Q](https://drive.google.com/file/d/17YlqhMa3o_m1-BGyylcmq-FNNYOsYoHP/view?usp=drive_link)
 
 Place as:
-PPE-Guard/
-└── app/
-    └── model.pt
+PPE-Guard/app/model.pt
 
 # 5. Run Application
 uvicorn app.main:app --reload
