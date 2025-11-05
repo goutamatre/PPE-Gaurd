@@ -1,190 +1,165 @@
-================================================================================
-                    PPE GUARD - PERSONAL PROTECTIVE EQUIPMENT DETECTION
-                           AI-Powered Safety Compliance Monitoring System
-================================================================================
+# PPE GUARD - PERSONAL PROTECTIVE EQUIPMENT DETECTION  
+### AI-Powered Safety Compliance Monitoring System  
 
-Tech Stack:
+---
+
+## Tech Stack
 - Python 3.8+
 - FastAPI 0.104+
 - YOLOv8 (Ultralytics)
 - License: MIT
+---
 
-Quick Links: Demo | Features | Installation | Usage | Contributing
+## 📝 About
 
-================================================================================
-ABOUT
-================================================================================
+**PPE Guard** is an intelligent Personal Protective Equipment detection system powered by the **YOLOv8** deep learning model. It automatically identifies whether individuals are wearing required safety gear including helmets, vests, gloves, boots, and face masks.
 
-PPE Guard is an intelligent Personal Protective Equipment detection system 
-powered by YOLOv8 deep learning model. It automatically identifies whether 
-individuals are wearing required safety gear including helmets, vests, gloves, 
-boots, and face masks. The system supports both real-time webcam monitoring 
-and image upload analysis, making it perfect for construction sites, industrial 
-zones, and hazardous work environments.
+Suitable for:
+- Construction sites  
+- Industrial zones  
+- Hazardous work environments  
 
-By automating PPE detection, this system helps:
+### Benefits:
 - Reduce human error in safety monitoring
 - Ensure workplace safety compliance
 - Provide instant alerts for missing equipment
 - Generate safety compliance reports
 
-================================================================================
-FEATURES
-================================================================================
+---
 
-Core Functionality:
-- Real-time Webcam Detection: Live monitoring with instant feedback
-- Image Upload Analysis: Analyze photos from your device
-- High Accuracy Detection: YOLOv8-powered detection with confidence scores
-- Fast Processing: Near real-time inference on both CPU and GPU
-- Confidence Scoring: See detection confidence levels (e.g., vest 0.91)
+## ✨ Features
 
-User Experience:
-- Modern Glassmorphism UI: Beautiful, intuitive interface with animated backgrounds
-- Fully Responsive Design: Works seamlessly on desktop, tablet, and mobile
-- Download Results: Save annotated detection images
-- Privacy First: All processing happens on your server, no data sent externally
+### Core Functionality
+- **Real-time Webcam Detection**
+- **Image Upload Analysis**
+- **High Accuracy YOLOv8 Detection**
+- **Near Real-Time GPU/CPU Processing**
+- **Confidence Scoring Display**
 
-Technical Features:
-- Custom-trained Model: Trained on specialized PPE datasets
-- FastAPI Backend: High-performance, async Python web framework
-- Adjustable Thresholds: Customize confidence and IoU thresholds
-- Easy Integration: RESTful API for integration with other systems
+### User Experience
+- Modern Glassmorphism UI
+- Fully Responsive Design
+- Download Annotated Results
+- Privacy First (No external data sharing)
 
-================================================================================
-DEMO
-================================================================================
+### Technical
+- Custom-trained PPE model
+- FastAPI Backend
+- Adjustable thresholds (Confidence / IoU)
+- REST API for easy integration
+
+---
+
+## 📸 Demo
 
 Screenshots:
-1. Homepage - Clean, modern interface with glassmorphism design
-2. Detection Results - Real-time detection showing PPE items with confidence scores
-3. Webcam Detection - Live webcam feed with continuous PPE monitoring
+1. Homepage –
+![Uploading WhatsApp Image 2025-11-05 at 19.28.25_70d7e987.jpg…]()
 
-================================================================================
-QUICK START
-================================================================================
+2. Detection Results – Highlighted PPE items with confidence values
+   ![WhatsApp Image 2025-11-05 at 19 32 34_bcbe7b3d](https://github.com/user-attachments/assets/cf7cf82e-5e93-4f1b-a9fb-7fc07a1b3483)
+  ![WhatsApp Image 2025-11-05 at 19 27 42_eef811b8](https://github.com/user-attachments/assets/0a3cdc9f-1f6f-4500-827c-21c14c75785f)
 
-Prerequisites:
-- Python 3.8 or higher
-- pip package manager
-- Webcam (optional, for real-time detection)
-
-Installation Steps:
-
-1. Clone the Repository
-   git clone https://github.com/your-username/ppe-guard.git
-   cd ppe-guard
-
-2. Create Virtual Environment
-   python -m venv myenv
-   
-   On Windows:
-   myenv\Scripts\activate
-   
-   On macOS/Linux:
-   source myenv/bin/activate
-
-3. Install Dependencies
-   pip install -r requirements.txt
-
-4. Download the Trained Model
-   Model Link: https://drive.google.com/uc?export=download&id=14jNk69dfp8qO7xJXiaFggttIzH_b6z1Q
-   Location: Place the downloaded file at app/model.pt
-   
-   Directory structure after placement:
-   PPE-Guard/
-   └── app/
-       └── model.pt
-
-5. Run the Application
-   uvicorn app.main:app --reload
-
-6. Open in Browser
-   Visit http://127.0.0.1:8000
-
-================================================================================
-USAGE
-================================================================================
-
-Image Upload Detection:
-1. Click on the "Upload Image" card
-2. Select an image containing people with/without PPE
-3. View detection results with confidence scores
-4. Download the annotated image
-
-Real-time Webcam Detection:
-1. Click on the "Live Webcam" card
-2. Grant camera permissions when prompted
-3. Click "Start Detection" to begin monitoring
-4. View real-time PPE detection with FPS counter
-5. Click "Stop Detection" when finished
+3. Webcam Detection – Live monitoring feed
+   ![WhatsApp Image 2025-11-05 at 19 31 23_c9bcc6ba](https://github.com/user-attachments/assets/c1344b82-dce8-4f2e-a169-48a925532a20)
 
 
-================================================================================
-PROJECT STRUCTURE
-================================================================================
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.8+
+- pip
+- Webcam (optional)
+
+### Installation
+
+```sh
+# 1. Clone repository
+git clone https://github.com/your-username/ppe-guard.git
+cd ppe-guard
+
+# 2. Create and activate virtual environment
+python -m venv myenv
+
+# Windows
+myenv\Scripts\activate
+# macOS/Linux
+source myenv/bin/activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Add Trained Model
+Download model:
+https://drive.google.com/uc?export=download&id=14jNk69dfp8qO7xJXiaFggttIzH_b6z1Q
+
+Place as:
+PPE-Guard/
+└── app/
+    └── model.pt
+
+# 5. Run Application
+uvicorn app.main:app --reload
+
+Visit: http://127.0.0.1:8000
+
+🧪 Usage
+# Image Upload Detection
+
+1. Click Upload Image
+2. Choose an image
+3. View detection results & confidence
+4. Download annotated image
+
+# Live Webcam Detection
+
+1. Click Live Webcam
+2. Allow camera permissions
+3. Start detection
+4. Stop when finished
+
+# 📂 Project Structure
 
 PPE-GUARD/
 ├── app/
-│   ├── main.py              # FastAPI application & routes
-│   ├── utils.py             # Detection utilities & image processing
-│   ├── model.pt             # YOLOv8 trained model (add manually)
+│   ├── main.py
+│   ├── utils.py
+│   ├── model.pt
 │   ├── static/
-│   │   └── style.css        # Styling for web interface
+│   │   └── style.css
 │   └── templates/
-│       ├── index.html       # Homepage with upload
-│       └── webcam.html      # Real-time webcam detection page
-├── requirements.txt         # Python dependencies
-├── README.md               # Project documentation
-└── .gitignore             # Git ignore file
+│       ├── index.html
+│       └── webcam.html
+├── requirements.txt
+├── README.md
+└── .gitignore
 
-================================================================================
-SUPPORTED PPE CLASSES
-================================================================================
+🛡 Supported PPE Classes
 
-The model is trained to detect:
-- Safety Helmets / Hard Hats
-- Safety Vests / High-Visibility Jackets
-- Safety Boots
-- Safety Gloves
-- Face Masks / Respirators
+1. Safety Helmets
+2. Safety Vests / High-Visibility Jackets
+3. Safety Boots
+4. Safety Gloves
+4. Face Masks / Respirators
 
-================================================================================
-DEPENDENCIES
-================================================================================
+# 📦 Dependencies
 
-- FastAPI: Modern web framework for building APIs
-- Ultralytics YOLOv8: State-of-the-art object detection
-- OpenCV: Computer vision and image processing
-- Uvicorn: ASGI server for FastAPI
-- Python-multipart: File upload handling
-- NumPy: Numerical computing
-- Pillow: Image manipulation
+1. FastAPI
+2. YOLOv8 (Ultralytics)
+3. OpenCV
+4. Uvicorn
+5. NumPy
+6. Pillow
+(See requirements.txt)
 
-See requirements.txt for complete list with versions.
+# 🔮 Future Enhancements
 
-
-================================================================================
-FUTURE ENHANCEMENTS
-================================================================================
-
-- Mobile app version
-- Docker containerization
-- Cloud deployment guide
-- API documentation with Swagger UI
-- Multi-camera support
-- Video file processing
-- Safety compliance reports (PDF export)
-- Integration with access control systems
-
-
-================================================================================
-AUTHOR
-================================================================================
-
-Your Name
-- GitHub: @your-username
-- LinkedIn: Your LinkedIn Profile
-- Email: your.email@example.com
-
-================================================================================
+1. Mobile App Version
+2. Docker Container Support
+3. Cloud Deployment Guide
+4. Multi-Camera Support
+5. Video File Processing
+6. PDF Safety Reports
+7. Integration With Security Systems
