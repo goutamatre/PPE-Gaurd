@@ -54,15 +54,16 @@ Suitable for:
 
 Screenshots:
 1. Homepage –
-![Uploading WhatsApp Image 2025-11-05 at 19.28.25_70d7e987.jpg…]()
+   ![WhatsApp Image 2025-11-05 at 19 28 25_2d0af806](https://github.com/user-attachments/assets/c75c9976-42e0-4300-af80-efbe61402a56)
 
+   
 2. Detection Results – Highlighted PPE items with confidence values
    ![WhatsApp Image 2025-11-05 at 19 32 34_bcbe7b3d](https://github.com/user-attachments/assets/cf7cf82e-5e93-4f1b-a9fb-7fc07a1b3483)
   ![WhatsApp Image 2025-11-05 at 19 27 42_eef811b8](https://github.com/user-attachments/assets/0a3cdc9f-1f6f-4500-827c-21c14c75785f)
 
+
 3. Webcam Detection – Live monitoring feed
    ![WhatsApp Image 2025-11-05 at 19 31 23_c9bcc6ba](https://github.com/user-attachments/assets/c1344b82-dce8-4f2e-a169-48a925532a20)
-
 
 ---
 
