@@ -76,29 +76,30 @@ Screenshots:
 ### Installation
 
 
-# 1. Clone repository
+1. Clone repository
 git clone https://github.com/your-username/ppe-guard.git
 cd ppe-guard
 
-# 2. Create and activate virtual environment
+2. Create and activate virtual environment
 python -m venv myenv
 
-# Windows
+Windows
 myenv\Scripts\activate
-# macOS/Linux
+
+macOS/Linux
 source myenv/bin/activate
 
-# 3. Install dependencies
+3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Add Trained Model
+4. Add Trained Model
 Download model:
 [https://drive.google.com/uc?export=download&id=14jNk69dfp8qO7xJXiaFggttIzH_b6z1Q](https://drive.google.com/file/d/17YlqhMa3o_m1-BGyylcmq-FNNYOsYoHP/view?usp=drive_link)
 
 Place as:
 PPE-Guard/app/model.pt
 
-# 5. Run Application
+5. Run Application
 uvicorn app.main:app --reload
 
 Visit: http://127.0.0.1:8000
