@@ -117,7 +117,8 @@ Visit: http://127.0.0.1:8000
 2. Allow camera permissions
 3. Start detection
 4. Stop when finished
-'''
+
+``` 
 # 📂 Project Structure
 
 PPE-GUARD/
@@ -133,7 +134,7 @@ PPE-GUARD/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
-'''
+```
 🛡 Supported PPE Classes
 
 1. Safety Helmets
