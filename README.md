@@ -7,7 +7,6 @@
 - Python 3.8+
 - FastAPI 0.104+
 - YOLOv8 (Ultralytics)
-- License: MIT
 ---
 
 ## 📝 About
